@@ -24,5 +24,5 @@
 	  <button id="btn-insert" type="submit" class="btn btn-primary">Submit</button>
 	</form>
 </div>
-<script src="js/user.js"></script>	
+<script src="js/user2.js"></script>	
 <%@ include file="../layout/footer.jsp" %>

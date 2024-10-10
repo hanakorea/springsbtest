@@ -108,7 +108,7 @@ public class UserController {
 		UserInfo user = userService.userUpdate(session, userinfo);
 		model.addAttribute("userinfo", user);
 		session.setAttribute("principal", user);
-		return "redirect:/userinfo";
+		return "redirect:/";
 	}
 	
 	

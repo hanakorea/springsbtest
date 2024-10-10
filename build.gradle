@@ -36,6 +36,9 @@ dependencies {
 	implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
 	// https://mvnrepository.com/artifact/javax.servlet/jstl
 	implementation group: 'javax.servlet', name: 'jstl'
+	// https://mvnrepository.com/artifact/org.webjars.npm/summernote
+	implementation group: 'org.webjars.npm', name: 'summernote', version: '0.8.20'
+	
 	
 	
 }
