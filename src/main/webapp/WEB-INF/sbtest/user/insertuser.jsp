@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../layout/header.jsp" %>
 	
-<form>
-
+<form method="post" action="/insertuser">
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Username</label>
-    <input type="password" class="form-control" id="username" name ="username">
+    <input type="text" class="form-control" id="username" name ="username" >
+    <button id="btn-check" type="submit" class="btn btn-success" disabled>Check</button>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -15,13 +15,8 @@
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button id="btn-insert" type="submit" class="btn btn-primary">Submit</button>
 </form>
 	
 <%@ include file="../layout/footer.jsp" %>
