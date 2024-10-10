@@ -11,5 +11,5 @@ public class ResponseDTO<T>{
 
 	private int status;
 	
-	private T content;
+	private T data;
 }

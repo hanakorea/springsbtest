@@ -28,14 +28,22 @@ public class UserService {
 		return check; 
 	}
 	
-	// 정보찾아서 수정
-	public void userUpdate(HttpSession session, UserInfo user) {
-		UserInfo user
-		
-		UserInfo userFind = userRepository.findById(id).get();
+	// 정보찾기
+	public UserInfo userFind(HttpSession session) {
+		// user객체에 저장만 한것
+		UserInfo user = (UserInfo)session.getAttribute("principal");
+		UserInfo userFind = userRepository.findById(user.getId()).get();
+		return userFind;
+	}
+	
+	// 정보수정
+	public UserInfo userUpdate(HttpSession session, UserInfo user) {
+		UserInfo userFind = userFind(session);
 		userFind.setPassword(user.getPassword());
 		userFind.setEmail(user.getEmail());
 		userRepository.save(userFind);
+		
+		return userFind;
 	}
 	
 	// 계정삭제

@@ -5,8 +5,8 @@
 <form method="post" action="/insertuser">
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" name ="username" >
-    <button id="btn-check" type="submit" class="btn btn-success" disabled>Check</button>
+    <input type="text" class="form-control" id="username" name ="username">
+    <button id="btn-check" type="button" class="btn btn-success">Check</button>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>

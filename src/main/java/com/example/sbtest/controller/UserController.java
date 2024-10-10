@@ -2,6 +2,7 @@ package com.example.sbtest.controller;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.sbtest.domain.ResponseDTO;
@@ -28,18 +31,17 @@ public class UserController {
 		return "user/insertuser";
 	}
 	
+	
 	// 아이디 중복 확인 버튼(값 입력시 알아서 확인) + alert 변경 필요
 	// responseDTO이용 + js로 응답/페이지 이동
 	@PostMapping("/insertuser")
-	public String insertuser(UserInfo user, Model model) {
+	public String insertuser(UserInfo user) {
 		UserInfo checkUser = userService.checkUser(user.getUsername());
 		
 		if(checkUser.getUsername() == null) {
 			userService.insertUser(user);
-			model.addAttribute("msg", "회원가입 성공");
 			return "redirect:/";
 		}else {
-			model.addAttribute("msg","중복된 아이디");
 			return "user/insertuser";	
 		}
 	}
@@ -75,22 +77,29 @@ public class UserController {
 	
 //	회원정보 수정 구현 부
 	@GetMapping("/userinfo")
-	public String userinfo() {
+	public String userinfo(HttpSession session, Model model) {
+		UserInfo user = userService.userFind(session);
+		model.addAttribute("userinfo", user);
 		return "user/userinfo";
 	}
 	
 	@PostMapping("/userinfo")
-	public String userinfo(HttpSession session, UserInfo user) {
-		
+	public String userinfo(HttpSession session, UserInfo userinfo, Model model) {
+		UserInfo user = userService.userUpdate(session, userinfo);
+		model.addAttribute("userinfo", user);
+		session.setAttribute("principal", user);
+		return "redirect:/userinfo";
 	}
 	
 	
-	
 // 	회원 탈퇴 구현 부
+	
+	// 왜 object로 페이지에 나타나는가...?
 	@DeleteMapping("/delete")
-	public String delete(int id, HttpSession session) {
+	@ResponseBody
+	public ResponseDTO<?> delete(int id, HttpSession session) {
 		userService.delete(id);
 		session.invalidate();
-		return "redirect:/";
+		return new ResponseDTO<>(HttpStatus.OK.value(),"탈퇴 성공");
 	}
 }
