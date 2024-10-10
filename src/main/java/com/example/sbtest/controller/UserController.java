@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,6 +25,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@GetMapping("/signup")
+	public String signup(){
+		return "user/signup";
+	}
+	
+	
 //	회원가입 구현 부
 	
 	@GetMapping("/insertuser")
@@ -31,18 +38,31 @@ public class UserController {
 		return "user/insertuser";
 	}
 	
+	@GetMapping("/insertuser/check")
+	@ResponseBody
+	public ResponseDTO<?> checkUsername(String username){
+		UserInfo usernameCheck = userService.checkUser(username);
+		
+		if(usernameCheck.getUsername() == null) {
+			return new ResponseDTO<>(HttpStatus.OK.value(), username+"사용가능");
+		}else {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), username +"사용불가능");
+		}
+	}
 	
-	// 아이디 중복 확인 버튼(값 입력시 알아서 확인) + alert 변경 필요
-	// responseDTO이용 + js로 응답/페이지 이동
 	@PostMapping("/insertuser")
-	public String insertuser(UserInfo user) {
+	@ResponseBody
+	public ResponseDTO<?> insertuser(@RequestBody UserInfo user) {
 		UserInfo checkUser = userService.checkUser(user.getUsername());
 		
 		if(checkUser.getUsername() == null) {
-			userService.insertUser(user);
-			return "redirect:/";
+			if(user.getPassword() != "" && user.getEmail() != "") {
+				userService.insertUser(user);
+				
+				return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername()+"회원가입 성공");
+			} return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "정보를 모두 입력해 주세요");
 		}else {
-			return "user/insertuser";	
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), "중복된 아이디 입니다. 아이디를 변경해 주세요");	
 		}
 	}
 	
@@ -94,7 +114,7 @@ public class UserController {
 	
 // 	회원 탈퇴 구현 부
 	
-	// 왜 object로 페이지에 나타나는가...?
+	// 왜 object로 페이지에 나타나는가...? -> object로 저장 전송, 명시 필요
 	@DeleteMapping("/delete")
 	@ResponseBody
 	public ResponseDTO<?> delete(int id, HttpSession session) {
