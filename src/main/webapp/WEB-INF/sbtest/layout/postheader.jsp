@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html>
 <html>
@@ -13,46 +12,29 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js"></script>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-<script src="https://kit.fontawesome.com/cd65c74941.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
   <div class="container-fluid">
-  	<!-- <i class="fa-light fa-house"></i> -->
-    <a class="navbar-brand" href="/">Home</a>
+    <a class="navbar-brand" href="/indexpost">게시판</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     
-   <c:if test="${sessionScope.principal == null}" > 
-    <div class="collapse navbar-collapse" id="navbarNav">
+       <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/insertuser">회원가입</a>
+          <a class="nav-link active" aria-current="page" href="/insertpost">게시물 등록</a>
         </li>
+<!--         <li class="nav-item">
+          <a class="nav-link" href="/modifypost">게시물 수정</a>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="/login">로그인</a>
+          <a class="nav-link" href="/">Home 돌아가기</a>
         </li>
       </ul>
     </div>
-   </c:if>
-      <c:if test="${sessionScope.principal != null}" > 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/userinfo">회원정보 수정</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">로그아웃</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/indexpost">게시판</a>
-        </li>
-      </ul>
-    </div>
-   </c:if>
-  </div>
+   </div>
 </nav>
-
+    
